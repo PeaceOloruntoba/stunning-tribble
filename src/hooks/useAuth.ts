@@ -8,7 +8,6 @@ import {
   updateProfile,
   RecaptchaVerifier,
   signInWithPhoneNumber,
-  ConfirmationResult,
   PhoneAuthProvider,
   linkWithCredential,
 } from "firebase/auth";
@@ -21,10 +20,21 @@ export const useAuth = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
+    if (!auth) {
+      setError("Firebase Auth not initialized");
       setLoading(false);
-    });
+      return;
+    }
+    const unsubscribe = auth.onAuthStateChanged(
+      (user) => {
+        setUser(user);
+        setLoading(false);
+      },
+      (err) => {
+        setError(err.message);
+        setLoading(false);
+      }
+    );
     return () => unsubscribe();
   }, []);
 
@@ -38,6 +48,7 @@ export const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
+      if (!auth) throw new Error("Firebase Auth not initialized");
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -84,6 +95,7 @@ export const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
+      if (!auth) throw new Error("Firebase Auth not initialized");
       const credential = PhoneAuthProvider.credential(
         confirmationResult.verificationId,
         code
@@ -101,6 +113,7 @@ export const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
+      if (!auth) throw new Error("Firebase Auth not initialized");
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -119,6 +132,7 @@ export const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
+      if (!auth) throw new Error("Firebase Auth not initialized");
       await signOut(auth);
       setUser(null);
       setLoading(false);
@@ -133,6 +147,7 @@ export const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
+      if (!auth) throw new Error("Firebase Auth not initialized");
       await sendPasswordResetEmail(auth, email);
       setLoading(false);
     } catch (err: any) {
