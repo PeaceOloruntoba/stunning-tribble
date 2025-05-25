@@ -1,10 +1,11 @@
 import { Stack, useRouter, useSegments } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useAuth } from "../hooks/useAuth";
+import { getApps } from "firebase/app";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -15,15 +16,22 @@ export default function RootLayout() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const segments = useSegments();
+  const [firebaseReady, setFirebaseReady] = useState(false);
 
   useEffect(() => {
-    if (fontsLoaded && !loading) {
+    if (getApps().length > 0) {
+      setFirebaseReady(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (fontsLoaded && !loading && firebaseReady) {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded, loading]);
+  }, [fontsLoaded, loading, firebaseReady]);
 
   useEffect(() => {
-    if (!fontsLoaded || loading) return;
+    if (!fontsLoaded || loading || !firebaseReady) return;
 
     const inAuthGroup = segments[0] === "(auth)";
     const inProtectedGroup = ["resident", "caretaker"].includes(segments[0]);
@@ -31,11 +39,11 @@ export default function RootLayout() {
     if (!user && !inAuthGroup) {
       router.replace("/register");
     } else if (user && inAuthGroup) {
-      router.replace("/resident");
+      router.replace("/terms");
     }
-  }, [user, loading, fontsLoaded, segments, router]);
+  }, [user, loading, fontsLoaded, firebaseReady, segments, router]);
 
-  if (!fontsLoaded || loading) {
+  if (!fontsLoaded || loading || !firebaseReady) {
     return null;
   }
 
