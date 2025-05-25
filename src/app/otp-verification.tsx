@@ -1,25 +1,31 @@
-import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useAuth } from '@/hooks/useAuth';
+import { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { useAuth } from "../hooks/useAuth";
+import { ConfirmationResult } from "firebase/auth";
 
 export default function OtpVerificationScreen() {
-  const [code, setCode] = useState('');
-  const [error, setError] = useState('');
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
   const { verifyOtp, loading } = useAuth();
   const router = useRouter();
   const { confirmation } = useLocalSearchParams();
 
   const handleVerify = async () => {
     if (!code) {
-      setError('OTP code required');
+      setError("OTP code required");
       return;
     }
     try {
-      const confirmationResult = JSON.parse(confirmation);
+      const confirmationString = Array.isArray(confirmation)
+        ? confirmation[0]
+        : confirmation;
+      const confirmationResult = JSON.parse(
+        confirmationString
+      ) as ConfirmationResult;
       await verifyOtp(confirmationResult, code);
-      router.replace('/terms');
+      router.replace("/terms");
     } catch (err: any) {
       setError(err.message);
     }
@@ -50,7 +56,7 @@ export default function OtpVerificationScreen() {
           disabled={loading}
         >
           <Text className="text-white text-center font-semibold font-[Inter-Regular]">
-            {loading ? 'Verifying...' : 'Verify'}
+            {loading ? "Verifying..." : "Verify"}
           </Text>
         </TouchableOpacity>
       </View>
