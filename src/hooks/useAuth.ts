@@ -12,7 +12,7 @@ import {
   linkWithCredential,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebaseConfig";
+import { auth, db } from "@/firebaseConfig";
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
