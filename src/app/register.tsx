@@ -39,15 +39,19 @@ export default function RegisterScreen() {
     }
     try {
       const { confirmationResult } = await signUp(
-        fullName,
         email,
         password,
+        fullName,
         role,
         phoneNumber
       );
       router.push({
         pathname: "/otp-verification",
-        params: { confirmation: JSON.stringify(confirmationResult) },
+        params: {
+          confirmation: JSON.stringify({
+            verificationId: confirmationResult.verificationId,
+          }),
+        },
       });
     } catch (err: any) {
       setError(err.message);
