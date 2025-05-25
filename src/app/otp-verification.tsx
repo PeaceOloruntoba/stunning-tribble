@@ -21,10 +21,15 @@ export default function OtpVerificationScreen() {
       const confirmationString = Array.isArray(confirmation)
         ? confirmation[0]
         : confirmation;
-      const confirmationResult = JSON.parse(
-        confirmationString
-      ) as ConfirmationResult;
-      await verifyOtp(confirmationResult, code);
+      const confirmationResult = JSON.parse(confirmationString) as {
+        verificationId: string;
+      };
+      await verifyOtp(
+        {
+          verificationId: confirmationResult.verificationId,
+        } as ConfirmationResult,
+        code
+      );
       router.replace("/terms");
     } catch (err: any) {
       setError(err.message);
