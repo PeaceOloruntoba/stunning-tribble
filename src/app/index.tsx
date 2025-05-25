@@ -23,7 +23,7 @@ function Content() {
               role="heading"
               className="text-3xl text-center native:text-5xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl"
             >
-              Welcome to Project ACME
+              Welcome to Project Peace
             </Text>
             <Text className="mx-auto max-w-[700px] text-lg text-center text-gray-500 md:text-xl dark:text-gray-400">
               Discover and collaborate on acme. Explore our services now.
