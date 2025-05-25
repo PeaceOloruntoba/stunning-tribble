@@ -45,10 +45,8 @@ export const useAuth = () => {
       );
       const user = userCredential.user;
 
-      // Update user profile
       await updateProfile(user, { displayName: fullName });
 
-      // Store user data in Firestore
       await setDoc(doc(db, "users", user.uid), {
         fullName,
         email,
@@ -57,7 +55,6 @@ export const useAuth = () => {
         createdAt: new Date().toISOString(),
       });
 
-      // Initialize reCAPTCHA for phone verification
       const recaptchaVerifier = new RecaptchaVerifier(
         auth,
         "recaptcha-container",
@@ -66,7 +63,6 @@ export const useAuth = () => {
         }
       );
 
-      // Send OTP
       const confirmationResult = await signInWithPhoneNumber(
         auth,
         phoneNumber,
@@ -82,13 +78,17 @@ export const useAuth = () => {
   };
 
   const verifyOtp = async (
-    confirmationResult: ConfirmationResult,
+    confirmationResult: { verificationId: string },
     code: string
   ) => {
     setLoading(true);
     setError(null);
     try {
-      await confirmationResult.confirm(code);
+      const credential = PhoneAuthProvider.credential(
+        confirmationResult.verificationId,
+        code
+      );
+      await linkWithCredential(auth.currentUser!, credential);
       setLoading(false);
     } catch (err: any) {
       setError(err.message);
