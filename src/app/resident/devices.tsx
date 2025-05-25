@@ -1,6 +1,7 @@
-import { View, Text, TouchableOpacity, Slider } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
+import Slider from "@react-native-community/slider";
 import { bluetoothService } from "../../services/bluetooth";
 
 const DeviceControl = ({
