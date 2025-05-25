@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useAuth } from '@/hooks/useAuth';
 
-
 export default function OtpVerificationScreen() {
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
@@ -43,7 +42,7 @@ export default function OtpVerificationScreen() {
           value={code}
           onChangeText={setCode}
           keyboardType="numeric"
-          maxLength={6"
+          maxLength={6}
         />
         <TouchableOpacity
           className="bg-blue-500 p-3 rounded-lg"
