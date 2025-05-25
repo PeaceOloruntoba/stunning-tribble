@@ -13,6 +13,10 @@
           "origin": "https://n"
         }
       ]
+    ],"permissions": [
+      "android.permission.BLUETOOTH",
+      "android.permission.BLUETOOTH_ADMIN",
+      "android.permission.ACCESS_FINE_LOCATION"
     ],
     "name": "stunning-tribble",
     "slug": "stunning-tribble"
