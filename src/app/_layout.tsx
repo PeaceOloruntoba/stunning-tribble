@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import "../global.css"
+import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,17 +39,14 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="terms"
-          options={{ title: "Terms and Conditions" }}
-        />
+        <Stack.Screen name="terms" options={{ headerShown: false }} />
         <Stack.Screen
           name="profile-selection"
-          options={{ title: "Select a Profile" }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="device-connection"
-          options={{ title: "Connect Devices" }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="resident" options={{ headerShown: false }} />
         <Stack.Screen name="caretaker" options={{ headerShown: false }} />
