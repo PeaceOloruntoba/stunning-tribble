@@ -12,12 +12,18 @@ export default function ResidentLayout() {
             backgroundColor: "#ffffff",
             borderTopWidth: 1,
             borderTopColor: "#e5e7eb",
+            height: 60,
+            paddingBottom: 5,
           },
-          tabBarActiveTintColor: "#000000",
+          tabBarActiveTintColor: "#1e40af",
           tabBarInactiveTintColor: "#6b7280",
           tabBarLabelStyle: {
             fontFamily: "Inter-Regular",
             fontSize: 12,
+            fontWeight: "600",
+          },
+          tabBarIconStyle: {
+            marginTop: 5,
           },
         }}
       >
