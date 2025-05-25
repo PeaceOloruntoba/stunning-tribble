@@ -1,13 +1,20 @@
+import { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../hooks/useAuth";
 import { doc, getDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { db } from "@/firebaseConfig";
+import { db } from "../../firebaseConfig";
+
+interface UserProfile {
+  fullName: string;
+  email: string;
+  role: string;
+  phoneNumber: string;
+}
 
 export default function ProfileScreen() {
   const { user, logout, loading } = useAuth();
-  const [profileData, setProfileData] = useState({
+  const [profileData, setProfileData] = useState<UserProfile>({
     fullName: "",
     email: "",
     role: "",
@@ -21,7 +28,7 @@ export default function ProfileScreen() {
         try {
           const userDoc = await getDoc(doc(db, "users", user.uid));
           if (userDoc.exists()) {
-            setProfileData(userDoc.data());
+            setProfileData(userDoc.data() as UserProfile);
           }
         } catch (err: any) {
           setError(err.message);
