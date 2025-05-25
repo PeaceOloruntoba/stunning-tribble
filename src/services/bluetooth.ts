@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 // Placeholder for Bluetooth library (e.g., react-native-bluetooth-serial)
-import { BluetoothSerial } from "./types/bluetooth"; // Adjust based on actual library
 
 export class BluetoothService {
   private static instance: BluetoothService;
