@@ -14,7 +14,7 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
-import { db } from "../../firebaseConfig"; // Adjust path to your Firebase config
+import { db } from "../../firebaseConfig"
 
 type Message = {
   id: string;
