@@ -14,7 +14,7 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
-import { db } from "../../firebaseConfig"
+import { db } from "../../firebaseConfig";
 
 type Message = {
   id: string;
@@ -54,7 +54,6 @@ export default function ChatScreen() {
   const [inputText, setInputText] = useState("");
 
   useEffect(() => {
-    // Listen for messages in Firestore
     const q = query(collection(db, "chats"), orderBy("timestamp", "asc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const messageList: Message[] = snapshot.docs.map((doc) => ({
